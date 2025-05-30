@@ -4,15 +4,38 @@ import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import connectToDatabase from "./Database/mongodb.js";
+import mongoose from "mongoose";
+import errorMiddleware from "./middlewares/error.middleware.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/app/v1/users", userRouter);
 app.use("/app/v1/subscriptions", subscriptionRouter);
 
+app.use(errorMiddleware);
 app.get("/", (req, res) => {
     res.send('Welcome to the Subscription Tracker API!'); // Capitalized 'Welcome'
+});
+
+// Add a test endpoint to check MongoDB connection
+app.get("/api/v1/test-db", (req, res) => {
+    const dbState = mongoose.connection.readyState;
+    const states = {
+        0: 'disconnected',
+        1: 'connected',
+        2: 'connecting',
+        3: 'disconnecting'
+    };
+    res.json({
+        status: states[dbState] || 'unknown',
+        readyState: dbState
+    });
 });
 
 app.listen(PORT, async () => {
