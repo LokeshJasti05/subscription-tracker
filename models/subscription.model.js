@@ -5,7 +5,7 @@ const subscriptionSchema = new mongoose.Schema({
         type: String,
         required: [true, "Subscription Name is required"],
         trim: true,
-        minLength:2,
+        minLength: 2,
         maxLength: 100,
     },
     price: {
@@ -23,7 +23,7 @@ const subscriptionSchema = new mongoose.Schema({
         enum: ['daily','weekly','monthly','yearly'],
         required: [true, "Frequency is required"],
     },
-    Category:{
+    category:{
         type: String,
         enum: ['food','music','entertainment','news','transportation','other'],
         required: [true, "Category is required"],
@@ -35,7 +35,7 @@ const subscriptionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active','inactive'],
+        enum: ['active','inactive','expired'],
         default: 'active',
     },
     startDate: {
