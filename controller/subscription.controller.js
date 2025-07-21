@@ -11,3 +11,11 @@ export const createSubscription = async (req,res,next) => {
         next(error);
     }
 }
+
+exportconst getUserSubscription = async (req,res,next) => {
+    try{
+        if(req.user.id !== req.params.id){}
+    }catch(e){
+        next(e);
+    }
+}
