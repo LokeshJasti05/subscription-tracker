@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
+import workflowRouter from "./routes/workflow.routes.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(arcjetMiddleware);
 app.use("/api/v1/auth", authRouter);
 app.use("/app/v1/users", userRouter);
 app.use("/app/v1/subscriptions", subscriptionRouter);
+app.use("/app/v1/workflows", workflowRouter);
 
 app.use(errorMiddleware);
 app.get("/", (req, res) => {
